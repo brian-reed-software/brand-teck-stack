@@ -108,9 +108,3 @@ See the [open issues](https://github.com/brian-reed-software/brand-teck-stack/is
 ## Authors
 
 * **Brian Reed** - *Software Engineer* - [Brian Reed](https://github.com/brian-reed-software/) - **
-
-## Acknowledgements
-
-* [ShaanCoding]()
-* []()
-* []()
