@@ -8,11 +8,9 @@ async function get(req, res): Promise<any> {
   }
   async function post(req, res): Promise<any> {
     const params = {
-      denominator: req.body.currency,
-      exchange: req.body.exchange,
-      asset: req.body.symbol,
+      denominator: req.body.results
     };
-    const priceUrl = new URL('https://crypto-asset-market-data-unified-apis-for-professionals.p.rapidapi.com/api/v1/exchanges/trades');
+    const priceUrl = new URL('https://brand-recognition.p.rapidapi.com/v1/results');
     priceUrl.search = (new URLSearchParams(params)).toString();
     const remoteResponse = await external(
       priceUrl.toString(),
@@ -24,9 +22,7 @@ async function get(req, res): Promise<any> {
       }
     )
     const response = Object.assign({
-      currency: req.body.currency,
-      exchange: req.body.exchange,
-      symbol: req.body.symbol,
+      currency: req.body.currency
     }, remoteResponse)
     return response
   }

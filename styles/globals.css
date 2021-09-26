@@ -9,6 +9,9 @@ body {
 * {
   box-sizing: border-box;
 }
+h1{
+  width:500px;
+}
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
@@ -98,7 +101,7 @@ button.submit:active {
   top:1px;
 }
 .card.form {
-  max-width: 300px;
+  max-width: 800px;
 }
 .card.code ul li {
   overflow-wrap: anywhere;

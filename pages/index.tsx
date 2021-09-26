@@ -1,71 +1,68 @@
 import { useState } from 'react'
 import Head from 'next/head'
-export default function Home() {
-  const [prices, setPrices] = useState([]);
-  async function getPrices(e): Promise<void> {
-    e.preventDefault() // prevent page from submitting form
-    const result = await (await fetch('/api/hello')).text()
-    setPrices(prices.concat(result))
-  }
-  function getValue(name: string): string {
-    const elements = document.getElementsByTagName('form')[0].elements
-    const element = elements.namedItem(name) as HTMLInputElement
-    return element.value || element.dataset.default
-  }
-  async function fetcher(data: object) {
-    const res = await fetch('/api/prices', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    })
-    return await res.text()
-  }
-  async function getPrices(e): Promise<void> {
-    e.preventDefault()
-    const result = await fetcher({
-      currency: getValue('currency'),
-      exchange: getValue('exchange'),
-      symbol: getValue('symbol'),
-    })
-    setPrices(prices.concat(result))
-  }
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Container, Row, Col, Tab, Tabs } from 'react-bootstrap'
+import ImageUploadForm from './components/ImageUploadForm/ImageUploadForm'
+const enroll = "enroll"
+const recognize = "recognize"
+
+
+export default function App() {
+
   return (
-    <div className="container">
-      <Head>
-        <title>Crypto Prices</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className="App">
+      <header className="App-header">
+        <h1>Friend or Foe</h1>
+      </header>
       <main>
-        <h3 className="title"> Crypto Prices </h3>
-        <div className="grid">
-          <div className="form card">
-            <form lang="en">
-              <div>
-                <div>
-                  <label htmlFor="symbol">Symbol:</label>
-                  <input type="text" id="symbol" name="symbol" data-default="BTC" placeholder="BTC" />
-                </div>
-                <div>
-                  <label htmlFor="currency">Currency:</label>
-                  <input type="text" id="currency" name="currency" data-default="USD" placeholder="USD" />
-                </div>
-                <div>
-                  <label htmlFor="exchange">Exchange:</label>
-                  <input type="text" id="exchange" name="exchange" data-default="Kraken" placeholder="Kraken" />
-                </div>
-              </div>
-              <div className="submit">
-                <button className="submit" onClick={getPrices}>Get Prices</button> &rarr;
-              </div>
-            </form>
-          </div>
-          <div className="code card">
-            <ul>
-              {prices.map((price, i) => <li key={i}><code>{price}</code></li>)}
-            </ul>
-          </div>
-        </div>
+        <Container fluid>
+          <Row className="justify-content-md-around">
+            <Col md="5">
+              <h2>Test Person</h2>
+              <Tabs defaultActiveKey="upload" id="uncontrolled-tab-example">
+                <Tab eventKey="upload" title="Upload">
+                  <ImageUploadForm
+                    label="Select Image to Test"
+                    type="file"
+                    endpoint={recognize}
+                  />
+                </Tab>
+                <Tab eventKey="url" title="URL">
+                  <ImageUploadForm
+                    label="Enter Image URL to Test"
+                    type="text"
+                    placeholder="Image address URL"
+                    endpoint={recognize}
+                  />
+                </Tab>
+              </Tabs>
+            </Col>
+            <Col md="5" className="bg-light">
+              <h2>Add Person</h2>
+              <Tabs defaultActiveKey="uploadAdd" id="uncontrolled-tab-example">
+                <Tab eventKey="uploadAdd" title="Upload">
+                  <ImageUploadForm
+                    label="Select Image to Add"
+                    type="file"
+                    endpoint={enroll}
+                  />
+                </Tab>
+                <Tab eventKey="urlAdd" title="URL">
+                  <ImageUploadForm
+                    label="Enter Image URL to Add"
+                    type="text"
+                    placeholder="Image address URL"
+                    endpoint={enroll}
+                  />
+                </Tab>
+              </Tabs>
+            </Col>
+          </Row>
+        </Container>
       </main>
+      <footer>
+        Page created by yournamehere
+      </footer>
     </div>
   )
 }
